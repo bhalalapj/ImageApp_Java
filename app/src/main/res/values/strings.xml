@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AndroidApp_Android</string>
+    <string name="title_item_detail">Item Detail</string>
+    <string name="todo">TODO</string>
+</resources>
