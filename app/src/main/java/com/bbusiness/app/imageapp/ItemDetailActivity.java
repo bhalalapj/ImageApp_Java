@@ -3,12 +3,9 @@ package com.bbusiness.app.imageapp;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.bbusiness.app.imageapp.rest.APIClient;
 
 import androidx.appcompat.widget.Toolbar;
-
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
@@ -37,8 +34,9 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
-            arguments.putString(ItemDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(ItemDetailFragment.ARG_ITEM_ID));
+            String id = getIntent().getStringExtra(ItemDetailFragment.ARG_ITEM_ID);
+
+            arguments.putString(ItemDetailFragment.ARG_ITEM_ID,id);
             ItemDetailFragment fragment = new ItemDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

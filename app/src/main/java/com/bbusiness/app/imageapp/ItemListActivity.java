@@ -14,7 +14,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bbusiness.app.imageapp.dummy.DummyContent;
-import com.bbusiness.app.imageapp.rest.UnSplashController;
 
 import java.util.List;
 
@@ -81,8 +80,7 @@ public class ItemListActivity extends AppCompatActivity {
                     Intent intent = new Intent(context, ItemDetailActivity.class);
                     intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
 
-//                    context.startActivity(intent);
-                    UnSplashController.getInstance().getPhotos(item.id);
+                    context.startActivity(intent);
                 }
             }
         };
@@ -117,7 +115,7 @@ public class ItemListActivity extends AppCompatActivity {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-//            final TextView mIdView;
+            //            final TextView mIdView;
             final TextView mContentView;
 
             ViewHolder(View view) {

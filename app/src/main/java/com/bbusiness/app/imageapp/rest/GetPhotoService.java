@@ -1,7 +1,6 @@
 package com.bbusiness.app.imageapp.rest;
 
 import com.bbusiness.app.imageapp.model.UnSplashResponse;
-import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

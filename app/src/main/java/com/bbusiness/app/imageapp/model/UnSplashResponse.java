@@ -6,11 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class UnSplashResponse {
-    public UnSplashResponse()
-    {
-        super();
-    }
-
     @SerializedName("total")
     @Expose
     private int total;
@@ -44,7 +39,6 @@ public class UnSplashResponse {
     public void setResults(List<Result> results) {
         this.results = results;
     }
-
 }
 
 
