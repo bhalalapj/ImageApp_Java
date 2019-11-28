@@ -3,6 +3,7 @@ package com.bbusiness.app.imageapp;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 /**
  * A fragment representing a single Item detail screen.
@@ -87,8 +87,9 @@ public class ItemDetailFragment extends Fragment {
                 if (response.isSuccessful()) {
                     photos = response.body().getResults();
                     populateList(rootView);
-                } else
-                    Log.e(TAG, response.errorBody().toString());
+                }
+//                else
+//                    Log.e(TAG, response.errorBody().toString());
             }
 
             @Override
@@ -108,7 +109,13 @@ public class ItemDetailFragment extends Fragment {
     private void populateList(View rootView) {
         if (photos.isEmpty() || photos.size() == 0)
             Toast.makeText(getActivity(), "List is empty", Toast.LENGTH_SHORT).show();
-        else
-            ((ImageView) rootView.findViewById(R.id.imgView)).setImageURI(Uri.parse(photos.get(0).getUrls().getThumb()));
+        else {
+//            ((ImageView) rootView.findViewById(R.id.imgView)).setImageURI(Uri.parse(photos.get(0).getUrls().getThumb()));
+
+            for(Result r : photos)
+            {
+                Log.d("Photo",r.getUrls().getThumb());
+            }
+        }
     }
 }
