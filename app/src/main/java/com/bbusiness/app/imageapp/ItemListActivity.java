@@ -3,21 +3,18 @@ package com.bbusiness.app.imageapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bbusiness.app.imageapp.dummy.DummyContent;
+import com.bbusiness.app.imageapp.rest.UnSplashController;
 
 import java.util.List;
 
@@ -53,6 +50,8 @@ public class ItemListActivity extends AppCompatActivity {
         View recyclerView = findViewById(R.id.item_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
+//        UnsplashPhotoPicker.INSTANCE.init(this.getApplication(),"608ad97262cae0dc5394a41ee8422787d170a84a31984d13d41c34172695aebb",
+//                "eea57bf8cbe16a83c3e70aa61143c4b72233f6342a030f2b15dd1b7f46a93820",30);
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
@@ -82,7 +81,8 @@ public class ItemListActivity extends AppCompatActivity {
                     Intent intent = new Intent(context, ItemDetailActivity.class);
                     intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
 
-                    context.startActivity(intent);
+//                    context.startActivity(intent);
+                    UnSplashController.getInstance().getPhotos(item.id);
                 }
             }
         };
