@@ -38,7 +38,18 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/item_detail_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!--    <com.google.android.gms.ads.AdView xmlns:ad="http://schemas.android.com/apk/res-auto"-->
+    <!--        android:id="@+id/adView"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:visibility="visible"-->
+    <!--        ad:adSize="BANNER"-->
+    <!--        ad:adUnitId="ca-app-pub-3816704934503239/6489742763" />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

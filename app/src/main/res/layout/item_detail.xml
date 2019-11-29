@@ -8,4 +8,12 @@
     android:padding="16dp"
     android:textIsSelectable="true"
     android:orientation="vertical"
-    tools:context=".ItemDetailFragment"></LinearLayout>
+    tools:context=".ItemDetailFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/imageList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" />
+
+</LinearLayout>

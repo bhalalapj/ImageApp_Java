@@ -1,9 +1,7 @@
 package com.bbusiness.app.imageapp;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Debug;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bbusiness.app.imageapp.dummy.DummyContent;
 import com.bbusiness.app.imageapp.model.Result;
@@ -19,6 +20,7 @@ import com.bbusiness.app.imageapp.model.UnSplashResponse;
 import com.bbusiness.app.imageapp.rest.APIClient;
 import com.bbusiness.app.imageapp.rest.GetPhotoService;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -27,29 +29,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-/**
- * A fragment representing a single Item detail screen.
- * This fragment is either contained in a {@link ItemListActivity}
- * in two-pane mode (on tablets) or a {@link ItemDetailActivity}
- * on handsets.
- */
 public class ItemDetailFragment extends Fragment {
     List<Result> photos;
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
     public static final String ARG_ITEM_ID = "item_id";
-
-    /**
-     * The dummy content this fragment is presenting.
-     */
     private DummyContent.DummyItem mItem;
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ItemDetailFragment() {
     }
 
@@ -58,13 +41,10 @@ public class ItemDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
             mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
 
             Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
+            CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
                 appBarLayout.setTitle(mItem.content);
             }
@@ -88,8 +68,6 @@ public class ItemDetailFragment extends Fragment {
                     photos = response.body().getResults();
                     populateList(rootView);
                 }
-//                else
-//                    Log.e(TAG, response.errorBody().toString());
             }
 
             @Override
@@ -98,11 +76,6 @@ public class ItemDetailFragment extends Fragment {
             }
         });
 
-        // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-//            ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.details);
-        }
-
         return rootView;
     }
 
@@ -110,11 +83,43 @@ public class ItemDetailFragment extends Fragment {
         if (photos.isEmpty() || photos.size() == 0)
             Toast.makeText(getActivity(), "List is empty", Toast.LENGTH_SHORT).show();
         else {
-//            ((ImageView) rootView.findViewById(R.id.imgView)).setImageURI(Uri.parse(photos.get(0).getUrls().getThumb()));
+            RecyclerView container = rootView.findViewById(R.id.imageList);
+            container.setLayoutManager(new LinearLayoutManager(getContext()));
+            container.setAdapter(new SimpleDetailItemRecyclerViewAdapter(photos));
+        }
+    }
 
-            for(Result r : photos)
-            {
-                Log.d("Photo",r.getUrls().getThumb());
+    public static class SimpleDetailItemRecyclerViewAdapter extends RecyclerView.Adapter<SimpleDetailItemRecyclerViewAdapter.ViewHolder> {
+        private final List<Result> mResult;
+
+        SimpleDetailItemRecyclerViewAdapter(List<Result> photos) {
+            mResult = photos;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.inner_details, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mResult.size();
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            String url = mResult.get(position).getUrls().getThumb();
+            Picasso.get().load(url).into(holder.mImageView);
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+            final ImageView mImageView;
+
+            ViewHolder(View view) {
+                super(view);
+                mImageView = view.findViewById(R.id.img);
             }
         }
     }
